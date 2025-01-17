@@ -1,0 +1,17 @@
+
+[theme]
+primaryColor = "#00E6A0"  # Neon Green
+backgroundColor = "#121212"  # Dark Background
+secondaryBackgroundColor = "#1e1e1e"  # Slightly lighter background for containers
+textColor = "#FFFFFF"  # White text for contrast
+font = "sans serif"  # Clean font choice
+
+# Customizing the sidebar to fit the theme
+[sidebar]
+backgroundColor = "#1e1e1e"
+textColor = "#FFFFFF"
+
+
+[server]
+enableCORS = false
+enableXsrfProtection = true
