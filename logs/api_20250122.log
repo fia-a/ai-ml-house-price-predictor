@@ -1,0 +1,2 @@
+2025-01-22 15:22:56,651 - api - INFO - Model and scaler loaded successfully
+2025-01-22 15:24:39,076 - api - INFO - Prediction made for input: {'LSTAT': 10.0, 'RM': 6.0, 'CRIM': 1.0, 'PTRATIO': 15.0, 'INDUS': 10.0, 'TAX': 300.0, 'NOX': 0.5, 'B': 300.0}

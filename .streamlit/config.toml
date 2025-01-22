@@ -1,16 +1,14 @@
-
 [theme]
-primaryColor = "#00E6A0"  # Neon Green
-backgroundColor = "#121212"  # Dark Background
-secondaryBackgroundColor = "#1e1e1e"  # Slightly lighter background for containers
-textColor = "#FFFFFF"  # White text for contrast
-font = "sans serif"  # Clean font choice
+primaryColor = "#00E6A0"  # Neon Green for primary elements (buttons, highlights)
+backgroundColor = "#1A1F3C"  # Deep Blue Background (slightly muted but still techy)
+secondaryBackgroundColor = "#2D3A60"  # Darker blue for containers (complementary)
+textColor = "#FFFFFF"  # Bright white text for contrast
+font = "sans serif"  # Clean, modern, and techy font
 
-# Customizing the sidebar to fit the theme
+# Customizing the sidebar to match the theme
 [sidebar]
-backgroundColor = "#1e1e1e"
-textColor = "#FFFFFF"
-
+backgroundColor = "#2D3A60"  # Dark blue to match secondary background
+textColor = "#00E6A0"  # Neon Green for sidebar text to make it pop
 
 [server]
 enableCORS = false

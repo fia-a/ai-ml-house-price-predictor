@@ -5,6 +5,7 @@ import numpy as np
 import pandas as pd
 from config.config import Config
 from utils.logger import setup_logger
+from fastapi.middleware.cors import CORSMiddleware
 
 logger = setup_logger('api')
 
@@ -17,7 +18,7 @@ class FeatureInput(BaseModel):
     TAX: float
     NOX: float
     B: float
-    
+
     class Config:
         schema_extra = {
             "example": {
@@ -32,20 +33,21 @@ class FeatureInput(BaseModel):
             }
         }
 
+# FastAPI instance
 app = FastAPI(
     title=Config.API_TITLE,
     description=Config.API_DESCRIPTION,
     version=Config.API_VERSION
 )
 
-#--- Jika deploy dengan docker aktifkan Cors -----
-# app.add_middleware(
-#     CORSMiddleware,
-#     allow_origins=["*"],
-#     allow_credentials=True,
-#     allow_methods=["*"],
-#     allow_headers=["*"],
-# )
+# CORS middleware (for cross-origin requests, e.g., from Streamlit)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Adjust as needed
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all methods (GET, POST, etc.)
+    allow_headers=["*"],  # Allows all headers
+)
 
 # Load model and scaler at startup
 try:
@@ -56,29 +58,29 @@ try:
     logger.info("Model and scaler loaded successfully")
 except Exception as e:
     logger.error(f"Error loading model or scaler: {str(e)}")
-    raise
+    raise HTTPException(status_code=500, detail=f"Error loading model or scaler: {str(e)}")
 
 @app.post("/predict")
 async def predict(features: FeatureInput):
     try:
-        # Validate input
+        # Validate input features
         for feature, value in features.dict().items():
             if not Config.is_valid_feature_value(feature, value):
                 raise HTTPException(
                     status_code=400,
-                    detail=f"Invalid value for {feature}"
+                    detail=f"Invalid value for {feature}: {value}. Expected between {Config.get_feature_range(feature)['min']} and {Config.get_feature_range(feature)['max']}."
                 )
         
-        # Prepare input
+        # Prepare input for prediction
         feature_dict = features.dict()
         input_df = pd.DataFrame([feature_dict])[Config.FEATURE_COLUMNS]
         
-        # Scale features
+        # Scale the features
         input_scaled = scaler.transform(input_df)
         
         # Make prediction
         prediction = model.predict(input_scaled)
-        final_prediction = float(np.exp(prediction[0]))
+        final_prediction = float(np.exp(prediction[0]))  # Ensure prediction is in the correct format
         
         logger.info(f"Prediction made for input: {feature_dict}")
         return {"prediction": final_prediction}

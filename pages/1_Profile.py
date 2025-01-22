@@ -63,7 +63,7 @@ with col1:
 with col2:
     st.title("Fia")
     st.subheader("Data Scientist")
-    st.markdown(get_pdf_download_link("cv/FIA_Resume2025.pdf", "fia_cv.pdf"), unsafe_allow_html=True)
+    st.markdown(get_pdf_download_link("cv/Fia-Resume-2025.pdf", "fia_cv.pdf"), unsafe_allow_html=True)
 
     
     st.markdown("""
